@@ -1,0 +1,41 @@
+Course Table 
+
+CREATE TABLE course_ (
+    c_id INT,                          -- Course ID
+    c_key INT,                         -- Course Key
+    course_name VARCHAR(20),           -- Course Name
+    CONSTRAINT PK_Course PRIMARY KEY (c_id, c_key)  -- Named composite primary key constraint
+);
+
+INSERT INTO course_ (c_id, c_key, course_name) VALUES
+(1, 101, 'Mathematics'),
+(1, 102, 'Advanced Mathematics'),
+(2, 201, 'Physics'),
+(2, 202, 'Quantum Mechanics'),
+(3, 301, 'Chemistry'),
+(4, 401, 'Biology');
+
+alter table course_ drop constraint PK_Course;
+
+alter table course_ add constraint	PK_Course PRIMARY KEY (c_id, c_key);
+
+Student Table 
+
+
+CREATE TABLE student_enrollment_ (
+    s_id INT,                              -- Student ID
+    name VARCHAR(50) NOT NULL,            -- Student Name
+    location VARCHAR(50),                  -- Student Location
+    course_id INT,                         -- Course ID (foreign key)
+    course_key INT,                        -- Course Key (to reference the composite primary key)
+    CONSTRAINT PK_StudentEnrollment PRIMARY KEY (s_id, course_id, course_key), -- Named composite primary key
+    CONSTRAINT FK_StudentCourse FOREIGN KEY (course_id, course_key) REFERENCES course_(c_id, c_key) -- Foreign key referencing the composite key of course table
+);
+
+
+INSERT INTO course_ (c_id, c_key, course_name) VALUES
+(101, 8, 'Mathematics'),
+(101, 9, 'Advanced Mathematics'),
+(102, 11, 'Physics'),
+(102, 21, 'Advanced Physics'),
+(103, 13, 'Chemistry');
